@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+## travel-companion is a web application that help user to find the best restaurants, hotels and attractions around their location.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
