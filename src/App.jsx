@@ -11,7 +11,10 @@ function App() {
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const [locationData, setLocationData] = useState([]);
-  const [coordinates, setCoordinates] = useState({});
+  const [coordinates, setCoordinates] = useState({
+    lat: 0,
+    lng: 0
+  });
   const [bounds, setBounds] = useState(null);
 
   const [childClick, setChildClick] = useState(null);
@@ -31,8 +34,8 @@ function App() {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-      setCoordinates({ lat: latitude, lng: longitude })
-    })
+      setCoordinates({ lat: latitude, lng: longitude });
+    }, (err) => console.log(err), { timeout: 8000 });
   }, []);
   // rating
   useEffect(() => {
@@ -41,7 +44,7 @@ function App() {
   }, [rating]);
   // boundary
   useEffect(() => {
-    if (bounds.sw && bounds.ne) {
+    if (bounds) {
       setLoading(true)
       getLocationData(type, bounds)
         .then((data) => {
@@ -71,8 +74,8 @@ function App() {
         <Grid item xs={12} md={8}>
           <Map
             setCoordinates={setCoordinates}
-            setBounds={setBounds}
             coordinates={coordinates}
+            setBounds={setBounds}
             places={filteredPlaces.length ? filteredPlaces : locationData}
             setChildClick={setChildClick}
           />
